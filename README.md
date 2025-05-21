@@ -20,7 +20,7 @@ A comprehensive project demonstrating a **CI/CD pipeline** with integrated **sec
 ```bash
 sudo apt update && sudo apt upgrade -y
 git clone https://github.com/aniketpuro/Netflix-Clone-DevSecOps-Project.git
-cd DevSecOps-Project
+cd Netflix-Clone-DevSecOps-Project/
 ```
 
 ### 🔹 Step 3: Install Docker and Run App
