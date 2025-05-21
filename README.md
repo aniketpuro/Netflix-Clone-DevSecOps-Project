@@ -19,7 +19,7 @@ A comprehensive project demonstrating a **CI/CD pipeline** with integrated **sec
 
 ```bash
 sudo apt update && sudo apt upgrade -y
-git clone https://github.com/N4si/DevSecOps-Project.git
+git clone https://github.com/aniketpuro/Netflix-Clone-DevSecOps-Project.git
 cd DevSecOps-Project
 ```
 
