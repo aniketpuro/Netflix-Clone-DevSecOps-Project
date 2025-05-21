@@ -9,87 +9,97 @@ import MaxLineTypography from "./MaxLineTypography";
 import { formatMinuteToReadable, getRandomNumber } from "src/utils/common";
 import AgeLimitChip from "./AgeLimitChip";
 import { useGetConfigurationQuery } from "src/store/slices/configuration";
+import "./SimilarVideoCard.css";
+
+// ✅ Add this Configuration interface
+interface Configuration {
+  images: {
+    base_url: string;
+    secure_base_url: string;
+    [key: string]: any;
+  };
+}
 
 interface SimilarVideoCardProps {
   video: Movie;
 }
 
 export default function SimilarVideoCard({ video }: SimilarVideoCardProps) {
-  const { data: configuration } = useGetConfigurationQuery(undefined);
+  const { data } = useGetConfigurationQuery(undefined);
+  const configuration = data as Configuration;
 
   return (
     <Card>
-      <div
-        style={{
-          width: "100%",
-          position: "relative",
-          paddingTop: "calc(9 / 16 * 100%)",
-        }}
-      >
-        <img
-          src={`${configuration?.images.base_url}w780${video.backdrop_path}`}
-          style={{
-            top: 0,
-            height: "100%",
-            position: "absolute",
-          }}
-        />
+      <>
         <div
           style={{
-            top: 10,
-            right: 15,
-            position: "absolute",
+            width: "100%",
+            position: "relative",
+            paddingTop: "calc(9 / 16 * 100%)",
           }}
         >
-          <Typography variant="subtitle2">{`${formatMinuteToReadable(
-            getRandomNumber(180)
-          )}`}</Typography>
-        </div>
-        <div
-          style={{
-            left: 0,
-            right: 0,
-            bottom: 0,
-            paddingLeft: "16px",
-            paddingRight: "16px",
-            paddingBottom: "4px",
-            position: "absolute",
-          }}
-        >
-          <MaxLineTypography
-            maxLine={1}
-            sx={{ width: "80%", fontWeight: 700 }}
-            variant="subtitle1"
+          <img
+            className="similar-video-card__image"
+            src={`${configuration?.images.base_url}w780${video.backdrop_path}`}
+            alt={video.title}
+          />
+          <div
+            style={{
+              top: 10,
+              right: 15,
+              position: "absolute",
+            }}
           >
-            {video.title}
-          </MaxLineTypography>
+            <Typography variant="subtitle2">{`${formatMinuteToReadable(
+              getRandomNumber(180)
+            )}`}</Typography>
+          </div>
+          <div
+            style={{
+              left: 0,
+              right: 0,
+              bottom: 0,
+              paddingLeft: "16px",
+              paddingRight: "16px",
+              paddingBottom: "4px",
+              position: "absolute",
+            }}
+          >
+            <MaxLineTypography
+              maxLine={1}
+              sx={{ width: "80%", fontWeight: 700 }}
+              variant="subtitle1"
+            >
+              {video.title}
+            </MaxLineTypography>
+          </div>
         </div>
-      </div>
-      <CardContent>
-        <Stack spacing={1}>
-          <Stack direction="row" alignItems="center">
-            <div>
-              <Typography
-                variant="subtitle2"
-                sx={{ color: "success.main" }}
-              >{`${getRandomNumber(100)}% Match`}</Typography>
-              <Stack direction="row" spacing={1} alignItems="center">
-                <AgeLimitChip label={`${getRandomNumber(20)}+`} />
-                <Typography variant="body2">
-                  {video.release_date.substring(0, 4)}
-                </Typography>
-              </Stack>
-            </div>
-            <div style={{ flexGrow: 1 }} />
-            <NetflixIconButton>
-              <AddIcon />
-            </NetflixIconButton>
+        <CardContent>
+          <Stack spacing={1}>
+            <Stack direction="row" alignItems="center">
+              <div>
+                <Typography
+                  variant="subtitle2"
+                  sx={{ color: "success.main" }}
+                >{`${getRandomNumber(100)}% Match`}</Typography>
+                <Stack direction="row" spacing={1} alignItems="center">
+                  <AgeLimitChip label={`${getRandomNumber(20)}+`} />
+                  <Typography variant="body2">
+                    {video.release_date.substring(0, 4)}
+                  </Typography>
+                </Stack>
+              </div>
+              <div style={{ flexGrow: 1 }} />
+              <NetflixIconButton>
+                <AddIcon />
+              </NetflixIconButton>
+            </Stack>
+            <MaxLineTypography maxLine={4} variant="subtitle2">
+              {video.overview}
+            </MaxLineTypography>
           </Stack>
-          <MaxLineTypography maxLine={4} variant="subtitle2">
-            {video.overview}
-          </MaxLineTypography>
-        </Stack>
-      </CardContent>
+        </CardContent>
+      </>
     </Card>
   );
 }
